@@ -1,7 +1,8 @@
 from Mapa import *
-from Player import *
+from Enemy import *
 import os
 import msvcrt
+import numpy
 
 ###################################
 # FUNCIÓN RANDOM
@@ -25,23 +26,31 @@ def gameover(jugador,enemigo,mapa):
 ###################################
 
 def main():
-#Creamos el mapa
-  Mapa1=Mapa(int(input("Numero de Filas: "))+2,int(input("Numero de Columnas: "))+2)
+
 #Creamos al jugador y al enemigo
   sujeto=Player("sujeto")
   enemigo=Enemy("enemigo")
   print()
-#Colocamos al jugador y al enemigo en el mapa
+
+  #Creamos el mapa
+  #Mapa1=Mapa(int(input("Numero de Filas: "))+2,int(input("Numero de Columnas: "))+2)
+  Mapa1=Mapa(13,22)
+  MapaCargado=numpy.loadtxt('Mapa2.txt', dtype=str,skiprows=0)
+  Mapa1.Modificar_Matriz(MapaCargado)
+  #Colocamos al jugador y al enemigo en el mapa
   Mapa1.Modificar_valor(Mapa1.get_matriz(),1, 1, sujeto.icono)
   sujeto.posicion_inicial(1,1)
   Mapa1.Modificar_valor(Mapa1.get_matriz(),Mapa1.get_num_filas()-2, Mapa1.get_num_columnas()-2, enemigo.icono)
   enemigo.posicion_inicial(Mapa1.get_num_filas()-2, Mapa1.get_num_columnas()-2)
+
+
   Mapa1.Imprime_Matriz(Mapa1.get_matriz())
   
 #Empieza el juego moviendo al personaje  
 
   print("Vamos a empezar a jugar moviendo al personaje:")
   
+
 #Bucle Principal
   while True:
       print("\n"+"Selecciona 'w', 's', 'a' o 'd' para mover al personaje, o selecciona 'x' para cerrar el programa: ")
@@ -59,8 +68,6 @@ def main():
                 sujeto.morirse()
             elif(enemigo.get_patron()==2):
                 enemigo.morirse()
-        
-        Mapa1.get_matriz_transitable()
         os.system('cls')  #Esto va a limpiar la pantalla en windows
         Mapa1.Imprime_Matriz(Mapa1.get_matriz())
 
