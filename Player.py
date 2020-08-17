@@ -66,8 +66,8 @@ class Player(object):
         
             if (movimiento==119):
                
-                if self._posicion_x >1:
-                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                if ((mapa._Matriz_Transitable[self._posicion_x-1][self._posicion_y]!="H") and (mapa._Matriz_Transitable[self._posicion_x-1][self._posicion_y]!="H")):
+                    mapa._Matriz[self._posicion_x][self._posicion_y]=" "
                     mapa._Matriz[self._posicion_x-1][self._posicion_y]=self.icono
                     self._posicion_x-=1
                 else:
@@ -75,8 +75,8 @@ class Player(object):
             
             elif movimiento==115:
                 
-                if self._posicion_x<mapa._filas-2:
-                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                if ((mapa._Matriz_Transitable[self._posicion_x+1][self._posicion_y]!="H") and (mapa._Matriz_Transitable[self._posicion_x+1][self._posicion_y]!="-")):
+                    mapa._Matriz[self._posicion_x][self._posicion_y]=" "
                     mapa._Matriz[self._posicion_x+1][self._posicion_y]=self.icono
                     self._posicion_x+=1
                 else:
@@ -84,8 +84,8 @@ class Player(object):
                     
             elif (movimiento==100):
                 
-                if self._posicion_y<mapa._columnas-2:
-                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                if ((mapa._Matriz_Transitable[self._posicion_x][self._posicion_y+1]!="H") and (mapa._Matriz_Transitable[self._posicion_x][self._posicion_y+1]!="-")):
+                    mapa._Matriz[self._posicion_x][self._posicion_y]=" "
                     mapa._Matriz[self._posicion_x][self._posicion_y+1]=self.icono
                     self._posicion_y+=1
                 else:
@@ -93,8 +93,8 @@ class Player(object):
                     
             elif (movimiento==97):
                 
-                if self._posicion_y>1:
-                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                if ((mapa._Matriz_Transitable[self._posicion_x][self._posicion_y-1]!="H") and (mapa._Matriz_Transitable[self._posicion_x][self._posicion_y-1]!="-")):
+                    mapa._Matriz[self._posicion_x][self._posicion_y]=" "
                     mapa._Matriz[self._posicion_x][self._posicion_y-1]=self.icono
                     self._posicion_y-=1
                 else:
