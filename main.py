@@ -1,3 +1,5 @@
+from Mapa import *
+from Player import *
 import os
 import msvcrt
 
@@ -31,24 +33,29 @@ def main():
   print()
 #Colocamos al jugador y al enemigo en el mapa
   Mapa1.Modificar_valor(Mapa1.get_matriz(),1, 1, sujeto.icono)
+  sujeto.posicion_inicial(1,1)
   Mapa1.Modificar_valor(Mapa1.get_matriz(),Mapa1.get_num_filas()-2, Mapa1.get_num_columnas()-2, enemigo.icono)
+  enemigo.posicion_inicial(Mapa1.get_num_filas()-2, Mapa1.get_num_columnas()-2)
   Mapa1.Imprime_Matriz(Mapa1.get_matriz())
   
 #Empieza el juego moviendo al personaje  
 
   print("Vamos a empezar a jugar moviendo al personaje:")
-  print("\n"+"Selecciona 'w', 's', 'a' o 'd' para mover al personaje, o selecciona 'salir' para cerrar el programa: ")
+  
 #Bucle Principal
   while True:
-      #movimiento=input()
+      print("\n"+"Selecciona 'w', 's', 'a' o 'd' para mover al personaje, o selecciona 'x' para cerrar el programa: ")
+      if(sujeto.misma_posicion(enemigo)==True):
+        break
       movimiento=ord(msvcrt.getch())
-      if movimiento==120:
+      if (movimiento==120):
           break
       else:
-        enemigo.patron2(sujeto,Mapa1)
+        enemigo.patron1(sujeto,Mapa1)
         sujeto.mover(movimiento,Mapa1)
-        if(sujeto.esta_vivo() and (sujeto.get_la_posicion_x_del_personaje(Mapa1)==enemigo.get_la_posicion_x_del_personaje(Mapa1) and sujeto.get_la_posicion_y_del_personaje(Mapa1)==enemigo.get_la_posicion_y_del_personaje(Mapa1))):
+        if(sujeto.esta_vivo() and (sujeto.getx()==enemigo.getx() and sujeto.gety()==enemigo.gety())):
             if(enemigo.get_patron()==1):
+                print("te he matado")
                 sujeto.morirse()
             elif(enemigo.get_patron()==2):
                 enemigo.morirse()
@@ -56,7 +63,7 @@ def main():
         Mapa1.get_matriz_transitable()
         os.system('cls')  #Esto va a limpiar la pantalla en windows
         Mapa1.Imprime_Matriz(Mapa1.get_matriz())
-        print("\n"+"Selecciona 'w', 's', 'a' o 'd' para mover al personaje, o selecciona 'salir' para cerrar el programa: ")
+
         if gameover(sujeto,enemigo,Mapa1)== True:
           break
         else: pass

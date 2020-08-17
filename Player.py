@@ -11,8 +11,22 @@ class Player(object):
       self.nombre=nombre
       self.icono="@"
       self._vivo=True
+      self._posicion_x=-1
+      self._posicion_y=-1
       
 #CONSULTORAS
+
+    def gety(self):
+        return self._posicion_y
+
+    def getx(self):
+        return self._posicion_x
+
+    def misma_posicion(self, Player):
+        misma_posicion=True
+        if(self._posicion_x != Player._posicion_x or self._posicion_y != Player._posicion_y):
+            misma_posicion=False
+        return misma_posicion
 
     def get_la_posicion_x_del_personaje(self, mapa): 
     #Al especificar un mapa, permite buscar al jugador
@@ -40,45 +54,49 @@ class Player(object):
 
 #MODIFICADORAS
 
+    def posicion_inicial(self, pos_x, pos_y):
+        self._posicion_x=pos_x
+        self._posicion_y=pos_y
+
+
     def mover(self, movimiento,mapa):
     #Pre: El jugador esta vivo
     #Post:
         if(self.esta_vivo()):
         
             if (movimiento==119):
-                posicion_x=self.get_la_posicion_x_del_personaje(mapa)
-                posicion_y=self.get_la_posicion_y_del_personaje(mapa)
-    
-                if posicion_x >1:
-                    mapa._Matriz[posicion_x][posicion_y]="·"
-                    mapa._Matriz[posicion_x-1][posicion_y]=self.icono
+               
+                if self._posicion_x >1:
+                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                    mapa._Matriz[self._posicion_x-1][self._posicion_y]=self.icono
+                    self._posicion_x-=1
                 else:
                     print("NOPE_UP")
             
             elif movimiento==115:
-                posicion_x=self.get_la_posicion_x_del_personaje(mapa)
-                posicion_y=self.get_la_posicion_y_del_personaje(mapa)
-                if posicion_x<mapa._filas-2:
-                    mapa._Matriz[posicion_x][posicion_y]="·"
-                    mapa._Matriz[posicion_x+1][posicion_y]=self.icono
+                
+                if self._posicion_x<mapa._filas-2:
+                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                    mapa._Matriz[self._posicion_x+1][self._posicion_y]=self.icono
+                    self._posicion_x+=1
                 else:
                     print("NOPE_DOWN")
                     
             elif (movimiento==100):
-                posicion_x=self.get_la_posicion_x_del_personaje(mapa)
-                posicion_y=self.get_la_posicion_y_del_personaje(mapa)
-                if posicion_y<mapa._columnas-2:
-                    mapa._Matriz[posicion_x][posicion_y]="·"
-                    mapa._Matriz[posicion_x][posicion_y+1]=self.icono
+                
+                if self._posicion_y<mapa._columnas-2:
+                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                    mapa._Matriz[self._posicion_x][self._posicion_y+1]=self.icono
+                    self._posicion_y+=1
                 else:
                     print("NOPE_RIGHT")
                     
             elif (movimiento==97):
-                posicion_x=self.get_la_posicion_x_del_personaje(mapa)
-                posicion_y=self.get_la_posicion_y_del_personaje(mapa)
-                if posicion_y>1:
-                    mapa._Matriz[posicion_x][posicion_y]="·"
-                    mapa._Matriz[posicion_x][posicion_y-1]=self.icono
+                
+                if self._posicion_y>1:
+                    mapa._Matriz[self._posicion_x][self._posicion_y]="·"
+                    mapa._Matriz[self._posicion_x][self._posicion_y-1]=self.icono
+                    self._posicion_y-=1
                 else:
                     print("NOPE_LEFT")
                     
@@ -100,7 +118,7 @@ class Enemy(Player):
     #Post:
     self.nombre=nombre
     Player.__init__(self ,nombre)
-    self.icono ="&"
+    self.icono ="X"
     self._patron=1
     
 #MODIFICADORAS
@@ -113,11 +131,13 @@ class Enemy(Player):
     if self.get_la_posicion_y_del_personaje(mapa) != objetivo.get_la_posicion_y_del_personaje(mapa):
       if self.get_la_posicion_y_del_personaje(mapa)<objetivo.get_la_posicion_y_del_personaje(mapa):
         self.mover(100,mapa)
-      else: self.mover(97,mapa)
+      else: 
+        self.mover(97,mapa)
     else:
       if self.get_la_posicion_x_del_personaje(mapa)<objetivo.get_la_posicion_x_del_personaje(mapa):
         self.mover(115,mapa)
-      else: self.mover(119,mapa)
+      else: 
+        self.mover(119,mapa)
       
 
   def patron2(self,objetivo,mapa):
