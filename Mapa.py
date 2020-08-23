@@ -55,6 +55,14 @@ class Mapa:
 
 #MODIFICADORAS
 
+    def Modificar_Matriz(self, matriz):
+        for i in range(self._filas):
+            for j in range(self._columnas):
+                self.Modificar_valor(self._Matriz, i,j,matriz[i][j])
+                if(matriz[i][j]==1):
+                    self.Modificar_valor(self._Matriz_Transitable, i,j,"0")
+                else: 
+                    self.Modificar_valor(self._Matriz_Transitable, i,j,matriz[i][j])
 
     def Imprime_Matriz(self,matriz):
     #Pre: Cierto
@@ -71,3 +79,5 @@ class Mapa:
     #Pre: fila < _fila, columna < _columna. 
     #Post: Se modifica el contenido de la celda Matriz[fila][columna] con el contenido de la variable valor.
         matriz[fila][columna]=valor
+
+   
