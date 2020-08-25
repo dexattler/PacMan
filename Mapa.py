@@ -59,7 +59,7 @@ class Mapa:
         for i in range(self._filas):
             for j in range(self._columnas):
                 self.Modificar_valor(self._Matriz, i,j,matriz[i][j])
-                if(matriz[i][j]==1):
+                if(matriz[i][j]=="H" or matriz[i][j]=="-"):
                     self.Modificar_valor(self._Matriz_Transitable, i,j,"0")
                 else: 
                     self.Modificar_valor(self._Matriz_Transitable, i,j,matriz[i][j])

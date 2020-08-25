@@ -35,7 +35,7 @@ def main():
   #Creamos el mapa
   #Mapa1=Mapa(int(input("Numero de Filas: "))+2,int(input("Numero de Columnas: "))+2)
   Mapa1=Mapa(13,22)
-  MapaCargado=numpy.loadtxt('Mapa2.txt', dtype=str,skiprows=0)
+  MapaCargado=numpy.loadtxt('Mapa1.txt', dtype=str,skiprows=0)
   Mapa1.Modificar_Matriz(MapaCargado)
   #Colocamos al jugador y al enemigo en el mapa
   Mapa1.Modificar_valor(Mapa1.get_matriz(),1, 1, sujeto.icono)
