@@ -62,7 +62,7 @@ class Mapa:
                 if(matriz[i][j]=="H" or matriz[i][j]=="-"):
                     self.Modificar_valor(self._Matriz_Transitable, i,j,"0")
                 else: 
-                    self.Modificar_valor(self._Matriz_Transitable, i,j,matriz[i][j])
+                    self.Modificar_valor(self._Matriz_Transitable, i,j,"1")
 
     def Imprime_Matriz(self,matriz):
     #Pre: Cierto
