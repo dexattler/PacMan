@@ -63,27 +63,37 @@ def main():
 
   grafo={}
 
-  for i in range(Mapa1._filas-2):
-    for j in range(Mapa1._columnas-2):
-
+  for i in range(Mapa1._filas):
+    for j in range(Mapa1._columnas):
+      lista=[]
       if Mapa1._Matriz_Transitable[i][j]=="1": #La idea es comprobar si la casilla es transitable. Si lo es, comprueba las casillas adyacentes. Si son transitables las añade al grafo
-
-          if Mapa1._Matriz_Transitable[i+2][+1]=="1":
-            grafo[{"{},{}".format(i,j):"{},{}".format(i+1,j)}]
-            print("1")
         
-
-          if Mapa1._Matriz_Transitable[i][j+1]=="1":
-            grafo[{"{},{}".format(i,j):"{},{}".format(i-1,j)}]
-            print("2")
-        
-          if Mapa1._Matriz_Transitable[i+1][j+2]=="1":
-            grafo[{"{},{}".format(i,j):"{},{}".format(i,j+1)}]
-            print("3")
-        
+        try:
           if Mapa1._Matriz_Transitable[i+1][j]=="1":
-            grafo[{"{},{}".format(i,j):"{},{}".format(i,j-1)}]
+            lista.append('({},{})'.format(i+1,j))
+            print("1")
+        except: print("error 1")
+
+        try:
+          if Mapa1._Matriz_Transitable[i-1][j]=="1":
+            lista.append('({},{})'.format(i-1,j))
+            print("2")
+        except: print("error 2")
+
+        try:        
+          if Mapa1._Matriz_Transitable[i][j+1]=="1":
+            lista.append('({},{})'.format(i,j+1))
+            print("3")
+        except: print("error 3")
+
+        try:        
+          if Mapa1._Matriz_Transitable[i][j-1]=="1":
+            lista.append('({},{})'.format(i,j-1))
             print("4")
+        except: print("error 4")
+        
+      grafo["({},{})".format(i,j)]=lista
+
         
 
   ##################################
@@ -107,10 +117,13 @@ def main():
                 enemigo.morirse()
         os.system('cls')  #Esto va a limpiar la pantalla en windows
         Mapa1.Imprime_Matriz(Mapa1.get_matriz())
-        #print(grafo)
+        print(grafo)
         if gameover(sujeto,enemigo,Mapa1)== True:
           break
         else: pass
   print("fin del juego")
  
 main()
+
+
+
