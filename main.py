@@ -24,7 +24,21 @@ def gameover(jugador,enemigo,mapa):
 # BFS
 ###################################
 
+visitado=[]
+cola=[]
+def bfs(visitado, grafo, nodo): #El nodo introducido es el inicial
+  visitado.append(nodo)
+  cola.append(nodo)
+  nodos=list(grafo.keys())
 
+  while cola:
+    s=cola.pop(0)
+    print (s, end=" ")
+
+    for vecino in nodos[s]:
+      if vecino not in visitado:
+        visitado.append(vecino)
+        cola.append(vecino)
 
 
 
@@ -117,7 +131,7 @@ def main():
                 enemigo.morirse()
         os.system('cls')  #Esto va a limpiar la pantalla en windows
         Mapa1.Imprime_Matriz(Mapa1.get_matriz())
-        print(grafo)
+        print(bfs(visitado,grafo,grafo["(1,1)"]))
         if gameover(sujeto,enemigo,Mapa1)== True:
           break
         else: pass
