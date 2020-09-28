@@ -19,27 +19,20 @@ def gameover(jugador,enemigo,mapa):
   if contador!=0:
     return True
   else: return False
-          
+
 ###################################
-# BFS
+# CÁLCULO DE PUNTUACIÓN
 ###################################
-
-visitado=[]
-cola=[]
-def bfs(visitado, grafo, nodo): #El nodo introducido es el inicial
-  visitado.append(nodo)
-  cola.append(nodo)
-  nodos=list(grafo.keys())
-
-  while cola:
-    s=cola.pop(0)
-    print (s, end=" ")
-
-    for vecino in nodos[s]:
-      if vecino not in visitado:
-        visitado.append(vecino)
-        cola.append(vecino)
-
+'''
+def puntuacion(mapa,pinicial):
+  #La puntuación inicial es el número de bolitas iniciales
+  contador=0
+  for i in range(mapa._filas):
+    for j in range(mapa._columnas):
+      if mapa._Matriz[i][j] == "·":
+        contador+=1
+  return pinicial-contador
+  '''
 
 
 ###################################
@@ -85,25 +78,21 @@ def main():
         try:
           if Mapa1._Matriz_Transitable[i+1][j]=="1":
             lista.append('({},{})'.format(i+1,j))
-            print("1")
         except: print("error 1")
 
         try:
           if Mapa1._Matriz_Transitable[i-1][j]=="1":
             lista.append('({},{})'.format(i-1,j))
-            print("2")
         except: print("error 2")
 
         try:        
           if Mapa1._Matriz_Transitable[i][j+1]=="1":
             lista.append('({},{})'.format(i,j+1))
-            print("3")
         except: print("error 3")
 
         try:        
           if Mapa1._Matriz_Transitable[i][j-1]=="1":
             lista.append('({},{})'.format(i,j-1))
-            print("4")
         except: print("error 4")
         
       grafo["({},{})".format(i,j)]=lista
@@ -121,8 +110,8 @@ def main():
       if (movimiento==120):
           break
       else:
-        enemigo.patron1(sujeto,Mapa1)
         sujeto.mover(movimiento,Mapa1)
+        enemigo.patron1(grafo,sujeto,Mapa1)
         if(sujeto.esta_vivo() and (sujeto.getx()==enemigo.getx() and sujeto.gety()==enemigo.gety())):
             if(enemigo.get_patron()==1):
                 print("te he matado")
@@ -131,7 +120,9 @@ def main():
                 enemigo.morirse()
         os.system('cls')  #Esto va a limpiar la pantalla en windows
         Mapa1.Imprime_Matriz(Mapa1.get_matriz())
-        print(bfs(visitado,grafo,grafo["(1,1)"]))
+        bfs_camino(grafo,sujeto.posicion(),enemigo.posicion())
+        
+
         if gameover(sujeto,enemigo,Mapa1)== True:
           break
         else: pass

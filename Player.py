@@ -22,6 +22,10 @@ class Player(object):
     def getx(self):
         return self._posicion_x
 
+    def posicion(self):
+        posicion='({},{})'.format(self._posicion_x,self._posicion_y)
+        return posicion
+
     def misma_posicion(self, Player):
         misma_posicion=True
         if(self._posicion_x != Player._posicion_x or self._posicion_y != Player._posicion_y):
